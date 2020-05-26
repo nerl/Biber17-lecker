@@ -147,7 +147,6 @@ public class ZweigSprite : MonoBehaviour {
             transform.rotation = Quaternion.identity;
             //Quaternion.LookRotation(movement);
 
-            Debug.Log("Hello World");
             //Debug.Log(transform.position);
             //Debug.Log("Mathf.Clamp01(journey / duration): journey: " + journey + " duration: " + duration + "--> " + Mathf.Clamp01(journey / duration));
             yield return null;
