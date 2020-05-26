@@ -145,8 +145,9 @@ public class ZweigSprite : MonoBehaviour {
             transform.position = Bezier2(transform.position, control, target + new Vector3(0, 0, 0), t);      // 
             //Vector3 movement = new Vector3(transform.position.x, 0.0f, transform.position.y);
             transform.rotation = Quaternion.identity;
-                //Quaternion.LookRotation(movement);
-            
+            //Quaternion.LookRotation(movement);
+
+            Debug.Log("Hello World");
             //Debug.Log(transform.position);
             //Debug.Log("Mathf.Clamp01(journey / duration): journey: " + journey + " duration: " + duration + "--> " + Mathf.Clamp01(journey / duration));
             yield return null;
