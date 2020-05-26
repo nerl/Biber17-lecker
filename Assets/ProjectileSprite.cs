@@ -9,11 +9,7 @@ public class ProjectileSprite : MonoBehaviour
     //
     public string huhuh;
 
-    public void SetSprite(Sprite sprite) {
-        this.GetComponent<SpriteRenderer>().sprite = sprite;
 
-
-    }
 
 
     private void OnMouseDown() {

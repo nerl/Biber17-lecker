@@ -10,7 +10,10 @@ public class LevelManager : MonoBehaviour {
     public List<Projectile> ProjectileList = new List<Projectile>();
     public List<HolzPlane> HolzPlaneList = new List<HolzPlane>();
 
+    //public GameObject zweigPrefab;
     public Projectile ProjectilePrefab;
+
+
     public HolzPlane holzPlane;  // = new HolzPlane().GetComponent<HolzPlane>();
 
     private SpriteCollection spriteCollection;
@@ -69,7 +72,7 @@ public class LevelManager : MonoBehaviour {
 
                 projectile.setSequencePosition(i);
                 projectile.setText("" + i);
-                projectile.SetSprite(spriteCollection.GetSprite("blaetter_1"));
+                //projectile.SetSprite(spriteCollection.GetSprite("blaetter_1"));
                 projectile.levelManagerListener = this;
                 ProjectileList.Add(projectile);
             }

@@ -51,8 +51,9 @@ public class Projectile : MonoBehaviour {
     }
 
 
+
     public void SetSprite (Sprite s) {
-        sprite.SetSprite(s);
+        this.GetComponent<SpriteRenderer>().sprite = s;
     }
 
     private void OnMouseDown() {
