@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using System.Xml;
-using UnityEditor;
+
 using UnityEditor.Experimental.U2D;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -57,7 +57,6 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        
         if (1 == 2)
             if ((transform.position - target.position).magnitude < (transform.position - start.position).magnitude) {
                 StartCoroutine(MoveOnCurve(target, start));
@@ -65,9 +64,6 @@ public class Projectile : MonoBehaviour {
             else {
                 StartCoroutine(MoveOnCurve(start, target));
             }
-
-
-
         levelManagerListener.checkForNotOccupied(gameObject);
 
 
@@ -78,31 +74,34 @@ public class Projectile : MonoBehaviour {
         StartCoroutine(MoveOnCurve(start, target));
     }
 
-
+    /*
     void setBezierPositions(Transform start, Transform target, Transform control) {
         this.start = start;
         this.target = target;
         this.control = control;
         transform.position = start.position;
     }
+    */
 
-
+    /*
     Vector3 getStartPosition() {
         return start.position;
     }
-
+    */
+    /*
     Vector3 getTargetPosition() {
         return start.position;
     }
+    */
+
+
 
     public void setText(String s) {
         projectileText.setText(s);
     }
 
     void Start() {
-        //projectileText = new ProjectileText();
 
-        //UnityEngine.Vector3 target = 
         start = new GameObject().transform;
         start.position = transform.position;
         start.name = "Start";
@@ -143,7 +142,7 @@ public class Projectile : MonoBehaviour {
 
     //    start* (1-t)^2+2*control1* t*(1-t)+end* (t)^2
 
-    private void lookInMovemementDirection() {
+    private void LookInMovemementDirection() {
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
 
@@ -152,7 +151,7 @@ public class Projectile : MonoBehaviour {
     }
 
 
-
+    /*
     private Vector3 getCurvePoint(float t, Vector3[] transforms) {
 
         String s = "Start " + transforms[0].ToString()
@@ -160,7 +159,7 @@ public class Projectile : MonoBehaviour {
         + "\nEnde  " + transforms[2].ToString()
         + "\nt: " + t;
         ;
-        //Alert(s);
+        
 
         float x, y, z;
         Vector3 result = new Vector3(0, 1, 2);
@@ -168,13 +167,17 @@ public class Projectile : MonoBehaviour {
             result[i] = transforms[0][i] * (1 - t) * (1 - t) + 2 * transforms[1][i] * t * (1 - t) + transforms[2][i] * t * t;
             //Alert ("result[" + i + "] " + result[i].ToString());
         }
-        //Alert (result.ToString());
-        return result;
-    }
 
-    private void Alert(String s) {
-        EditorUtility.DisplayDialog("Alert", s, "Ok");
+        
+        
+        
+
+            return result;
     }
+    */
+
+
+
 
 
     private Vector3 Bezier2(Vector3 Start, Vector3 Control, Vector3 End, float t) {
@@ -183,25 +186,14 @@ public class Projectile : MonoBehaviour {
 
 
     private IEnumerator MoveOnCurve(Transform start, Transform target) {
-
-
         Vector3[] transforms = new Vector3[3];
         transform.position = start.position;
         transforms[0] = start.position;
         transforms[1] = new Vector3((start.position - target.position).magnitude / 2f, UnityEngine.Random.Range(10, 20), UnityEngine.Random.Range(-10f, 20f));
         transforms[2] = target.position;
-
-
-
-
-
         float distance = (start.position - target.position).magnitude;
-
         float t;
-
-
         float journey = 0f;
-
         Rigidbody rb = GetComponent<Rigidbody>();
         //duration = 2f;
         while (journey <= duration) {
@@ -211,8 +203,6 @@ public class Projectile : MonoBehaviour {
             transform.position = Bezier2(start.position, transforms[1], target.position + new Vector3(0, 0.5f, -0.5f), t);
             Vector3 movement = new Vector3(transform.position.x, 0.0f, transform.position.y);
             transform.rotation = Quaternion.LookRotation(movement);
-
-
             //            rb.AddTorque(transform.up * 2 * 3f);
 
             Debug.Log(transform.position);
@@ -220,48 +210,9 @@ public class Projectile : MonoBehaviour {
             yield return null;
         }
 
-        /* for (int i=0; i<10; i++) {
-         t = (float)i / 10;
+       
 
-        //transform.position = getCurvePoint(t, transforms);
-
-
-     }*/
-        /*
-        while (distance>1f) {
-            
-        }*/
 
     }
-    /*
-    private IEnumerator MoveOnLine(Transform start, Transform target) {
-        //yield return new WaitForSeconds(1.5f);
-        Debug.Log("startTime: " + startTime);
-
-        float distCovered;
-        float fractionOfJourney = 0;
-
-
-        while (fractionOfJourney < 1) {
-            distCovered = (Time.time - startTime) * speed;
-            //distCovered = (target.transform.position - transform.position).magnitude;
-            fractionOfJourney = distCovered / distance;
-            Debug.Log("fractionOfJourney: " + fractionOfJourney);
-            Debug.Log("transform.position: " + transform.position.ToString());
-
-            if (fractionOfJourney < 1) {
-                transform.position = Vector3.Lerp(start.position, target.position, fractionOfJourney);
-
-            }
-            else {
-                transform.Rotate(start.position, 45f);
-                transform.rotation = Quaternion.identity;
-            }
-
-            yield return null;
-        }
-
-    }
-
-    */
+  
 }

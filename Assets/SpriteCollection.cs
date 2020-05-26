@@ -11,6 +11,7 @@ public class SpriteCollection {
 
 		for (var i = 0; i < names.Length; i++) {
 			names[i] = sprites[i].name;
+			//UtilFunctions.Alert("" + i + " " + names[i]);
 		}
 	}
 

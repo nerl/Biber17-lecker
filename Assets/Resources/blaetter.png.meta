@@ -106,8 +106,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 1
-        width: 215
-        height: 269
+        width: 251
+        height: 337
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,7 +115,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e2f5dfd79ef38140ae3dc7e5a875f51
+      spriteID: 699c683c04c4b434c9b3b0bcf33e289e
       vertices: []
       indices: 
       edges: []
@@ -127,7 +127,7 @@ TextureImporter:
         x: 276
         y: 0
         width: 219
-        height: 274
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,7 +135,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a8d332ad367cd04d93ffd92429755e6
+      spriteID: efb797e71ddb7b84d81a8b5b6af1ceed
       vertices: []
       indices: 
       edges: []
@@ -147,7 +147,7 @@ TextureImporter:
         x: 559
         y: 0
         width: 215
-        height: 271
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,7 +155,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ce4dbbd50560f8458575036802b64cd
+      spriteID: 9ea1d5c9218cbbc49a3b2f32a86e9553
       vertices: []
       indices: 
       edges: []
@@ -164,10 +164,10 @@ TextureImporter:
       name: blaetter_3
       rect:
         serializedVersion: 2
-        x: 857
+        x: 860
         y: 1
-        width: 277
-        height: 311
+        width: 212
+        height: 337
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,7 +175,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12be438ac6b6bc146ae46ef8a52b332d
+      spriteID: d7ecdb10090874440910282a4ea2c396
       vertices: []
       indices: 
       edges: []
@@ -184,10 +184,10 @@ TextureImporter:
       name: blaetter_4
       rect:
         serializedVersion: 2
-        x: 1160
+        x: 1132
         y: 2
-        width: 288
-        height: 311
+        width: 316
+        height: 336
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,7 +195,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5fb9fe55d71e704b9ce050c693ac00e
+      spriteID: 6f6f6b7e3193b33419936db1a2f1667b
       vertices: []
       indices: 
       edges: []

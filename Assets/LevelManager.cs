@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using UnityEditorInternal;
+using System.Linq;
+
 
 public class LevelManager : MonoBehaviour {
 
-    public List<Projectile> ProjectileList = new List<Projectile>();
+    public List<ZweigSprite> ZweigSpriteList = new List<ZweigSprite>();
     public List<HolzPlane> HolzPlaneList = new List<HolzPlane>();
 
     //public GameObject zweigPrefab;
     public Projectile ProjectilePrefab;
+    public ZweigSprite zweigSpritePrefab;
 
 
     public HolzPlane holzPlane;  // = new HolzPlane().GetComponent<HolzPlane>();
@@ -28,54 +31,115 @@ public class LevelManager : MonoBehaviour {
         }
         Alert(s);
         */
-        Projectile tempProjectile = go.GetComponent<Projectile>();
+        ZweigSprite tempZweig = go.GetComponent<ZweigSprite>();
         for (int i = 0; i < HolzPlaneList.Count; i++) {
             if (HolzPlaneList[i].getOccupied()) {
                 // Alert(i + " isOccupied " + HolzPlaneList[i].isOccupied);
             }
             else {
-                tempProjectile.Move(go.transform, HolzPlaneList[i].transform);
+                tempZweig.Move(HolzPlaneList[i].transform);
                 HolzPlaneList[i].setOccupied(true);
-                HolzPlaneList[tempProjectile.getSequencePosition()].setOccupied(false);
-                tempProjectile.setSequencePosition(i);
+                HolzPlaneList[tempZweig.GetSequencePosition()].setOccupied(false);
+                tempZweig.SetSequencePosition(i);
                 //tempProjectile.setText(":" + i);
                 break;
             }
         }
 
     }
+    /// <summary>
+    /// Krass 
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    private void DestroyPrefab ( IEnumerable<MonoBehaviour> destroyList ) 
+    {
+        foreach (var tmpDestroy in destroyList) 
+        {
+            GameObject go = tmpDestroy.gameObject;
+            go.SetActive(false);
+            Destroy(go, 3);
+        }
 
-
-
-    private void Alert(String s) {
-        EditorUtility.DisplayDialog("Alert", s, "Ok");
     }
 
+    //void DestroyList (IList<MonoBehaviour> list ) {
+    //    foreach (var go in list) {
+    //        go.SetActive(false);
+    //        Destroy(go, 3);
+    //    }
+    //}
 
-    // Start is called before the first frame update
-    void Start() {
+    public void NewGame() {
+        //DestroyList(HolzPlaneList);
 
-        spriteCollection = new SpriteCollection("blaetter");
-        Alert(spriteCollection.sprites.Length + "");
-        Alert(spriteCollection.GetSpriteName(1));
+        DestroyPrefab(HolzPlaneList);
+        DestroyPrefab(ZweigSpriteList);
 
+
+        //for (int i = 0; i < ZweigSpriteList.Count; i++) {
+        //    DestroyPrefab(ZweigSpriteList[i].gameObject);
+        //}
+        //for (int i = 0; i < HolzPlaneList.Count; i++) {
+        //    DestroyPrefab(HolzPlaneList[i].gameObject);
+        //}
+
+
+
+
+        ZweigSpriteList = new List<ZweigSprite>();
+        HolzPlaneList.Clear();
+        //HolzPlaneList = new List<HolzPlane>();
+
+        //UtilFunctions.Alert("ZweigSpriteList.Count: " + ZweigSpriteList.Count );
+
+        //UtilFunctions.Alert(spriteCollection.sprites.Length + "");
+        //UtilFunctions.Alert(spriteCollection.GetSpriteName(1));
+
+        //3,5,4,1,2
+        List<int> numbers = new List<int>();
+        List<int> sequence = new List<int>();
+        for (int i = 0; i < 5; i++) {
+            numbers.Add(i);
+            //UtilFunctions.Alert("" + i);
+        }
+        System.Random zufall = new System.Random();
+
+
+        while (numbers.Count > 0) {
+            int i = zufall.Next(0, numbers.Count - 1);
+
+            sequence.Add(numbers[i]);
+            //UtilFunctions.Alert("adding " + numbers[i]);
+            numbers.RemoveAt(i);
+        }
+        String s = "";
+        for (int i = 0; i < sequence.Count; i++) {
+            s = s + "\n" + sequence[i];
+        }
+        //UtilFunctions.Alert(s);
 
 
         float startX = -15;
-        
+
         for (int i = 0; i < 6; i++) {
             startX = startX + 5f;
             if (i > 0) {
-                Projectile projectile = Instantiate(ProjectilePrefab, new Vector3(startX, 0.5f, 0), Quaternion.identity);
-                projectile.transform.localPosition = projectile.transform.position;
-                projectile.name = "Projectile #" + i;
 
-                projectile.setSequencePosition(i);
-                projectile.setText("" + i);
-                //projectile.SetSprite(spriteCollection.GetSprite("blaetter_1"));
-                projectile.levelManagerListener = this;
-                ProjectileList.Add(projectile);
+                ZweigSprite zweigSprite = Instantiate(zweigSpritePrefab, new Vector3(startX, 0.5f, 0), Quaternion.identity);
+                zweigSprite.transform.position = zweigSprite.transform.position + new Vector3(0f, zweigSprite.heightPosition, 0f);
+
+                zweigSprite.SetSequencePosition(i);
+                zweigSprite.SetLevelManagerListener(this);
+                zweigSprite.name = "Zweig  " + sequence[i - 1];       // wir müssen i dekrementieren, weil wir ja die Zählung ab der ersten Bodenposition haben, welches als Stack verwendet wird
+                zweigSprite.SetSprite(spriteCollection.GetSprite("blaetter_" + (sequence[i - 1])));
+                ZweigSpriteList.Add(zweigSprite);
             }
+
+
+
+
 
             HolzPlane hp = Instantiate(holzPlane, new Vector3(startX, 0.01f, 0), Quaternion.identity);
             hp.name = "Holzplane" + i;
@@ -86,6 +150,16 @@ public class LevelManager : MonoBehaviour {
 
             HolzPlaneList.Add(hp);
         }
+    }
+
+    
+
+
+    // Start is called before the first frame update
+    void Start() {
+        spriteCollection = new SpriteCollection("blaetter");
+        NewGame();
+
     }
 
     // Update is called once per frame
