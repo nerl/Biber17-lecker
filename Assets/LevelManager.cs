@@ -6,23 +6,29 @@ using System;
 using UnityEditorInternal;
 using System.Linq;
 
-
+/// <summary>
+/// 
+/// </summary>
 public class LevelManager : MonoBehaviour {
 
     public List<ZweigSprite> ZweigSpriteList = new List<ZweigSprite>();
     public List<HolzPlane> HolzPlaneList = new List<HolzPlane>();
-
-    //public GameObject zweigPrefab;
-    public Projectile ProjectilePrefab;
     public ZweigSprite zweigSpritePrefab;
-
-
     public HolzPlane holzPlane;  // = new HolzPlane().GetComponent<HolzPlane>();
-
     private SpriteCollection spriteCollection;
+    public Camera mainCamera;
+    Vector3 CameraSceneBeginsPosition = new Vector3(-4.11f, 12f, -184f);
+    Vector3 CameraFinalPosition = new Vector3(-4.11f, 18f, -28f);
+    bool cameraIsMoving = false;
 
 
 
+    /// <summary>
+    /// Geht alle HolzPLanes durch und schaut, ob da schon ein Zweig liegt, 
+    /// wenn nicht, dann wird der neuen Holzplane der Status occupied gegeben
+    /// der zweig bewegt, und dem Zweig auch eine neue Sequence mitgeteilt
+    /// </summary>
+    /// <param name="go"></param>
     public void checkForNotOccupied(GameObject go) {
         /*
         String s = "";
@@ -53,10 +59,8 @@ public class LevelManager : MonoBehaviour {
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
-    private void DestroyPrefab ( IEnumerable<MonoBehaviour> destroyList ) 
-    {
-        foreach (var tmpDestroy in destroyList) 
-        {
+    private void DestroyPrefab ( IEnumerable<MonoBehaviour> destroyList )  {
+        foreach (var tmpDestroy in destroyList)  {
             GameObject go = tmpDestroy.gameObject;
             go.SetActive(false);
             Destroy(go, 3);
@@ -64,40 +68,21 @@ public class LevelManager : MonoBehaviour {
 
     }
 
-    //void DestroyList (IList<MonoBehaviour> list ) {
-    //    foreach (var go in list) {
-    //        go.SetActive(false);
-    //        Destroy(go, 3);
-    //    }
-    //}
-
+    
+    /// <summary>
+    /// alle eventuell vorhanden Prefabs Zweig und Holzplane werden entfernt
+    /// zufällig werden die Zweige und Holzplanes ausgerollt
+    /// </summary>
     public void NewGame() {
-        //DestroyList(HolzPlaneList);
-
+        ZoomOut();
         DestroyPrefab(HolzPlaneList);
         DestroyPrefab(ZweigSpriteList);
-
-
-        //for (int i = 0; i < ZweigSpriteList.Count; i++) {
-        //    DestroyPrefab(ZweigSpriteList[i].gameObject);
-        //}
-        //for (int i = 0; i < HolzPlaneList.Count; i++) {
-        //    DestroyPrefab(HolzPlaneList[i].gameObject);
-        //}
-
-
-
-
         ZweigSpriteList = new List<ZweigSprite>();
         HolzPlaneList.Clear();
-        //HolzPlaneList = new List<HolzPlane>();
+        ZoomIn();
 
         //UtilFunctions.Alert("ZweigSpriteList.Count: " + ZweigSpriteList.Count );
 
-        //UtilFunctions.Alert(spriteCollection.sprites.Length + "");
-        //UtilFunctions.Alert(spriteCollection.GetSpriteName(1));
-
-        //3,5,4,1,2
         List<int> numbers = new List<int>();
         List<int> sequence = new List<int>();
         for (int i = 0; i < 5; i++) {
@@ -105,7 +90,6 @@ public class LevelManager : MonoBehaviour {
             //UtilFunctions.Alert("" + i);
         }
         System.Random zufall = new System.Random();
-
 
         while (numbers.Count > 0) {
             int i = zufall.Next(0, numbers.Count - 1);
@@ -121,15 +105,13 @@ public class LevelManager : MonoBehaviour {
         //UtilFunctions.Alert(s);
 
 
-        float startX = -15;
 
+        float startX = -15;
         for (int i = 0; i < 6; i++) {
             startX = startX + 5f;
             if (i > 0) {
-
                 ZweigSprite zweigSprite = Instantiate(zweigSpritePrefab, new Vector3(startX, 0.5f, 0), Quaternion.identity);
                 zweigSprite.transform.position = zweigSprite.transform.position + new Vector3(0f, zweigSprite.heightPosition, 0f);
-
                 zweigSprite.SetSequencePosition(i);
                 zweigSprite.SetLevelManagerListener(this);
                 zweigSprite.name = "Zweig  " + sequence[i - 1];       // wir müssen i dekrementieren, weil wir ja die Zählung ab der ersten Bodenposition haben, welches als Stack verwendet wird
@@ -137,17 +119,12 @@ public class LevelManager : MonoBehaviour {
                 ZweigSpriteList.Add(zweigSprite);
             }
 
-
-
-
-
             HolzPlane hp = Instantiate(holzPlane, new Vector3(startX, 0.01f, 0), Quaternion.identity);
             hp.name = "Holzplane" + i;
             hp.setOccupied(true);
             if (i == 0) {
                 hp.setOccupied(false);
             }
-
             HolzPlaneList.Add(hp);
         }
     }
@@ -157,9 +134,9 @@ public class LevelManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        mainCamera.transform.position = CameraSceneBeginsPosition;
         spriteCollection = new SpriteCollection("blaetter");
         NewGame();
-
     }
 
     // Update is called once per frame
@@ -168,9 +145,40 @@ public class LevelManager : MonoBehaviour {
     }
 
 
+    public void ZoomIn() => StartCoroutine(CameraMove(CameraFinalPosition));
+    public void ZoomOut() {
+        
+        //StartCoroutine(CameraMove(CameraSceneBeginsPosition));
+        mainCamera.transform.position = CameraSceneBeginsPosition;
+    }
+
+
+    IEnumerator CameraMove(Vector3 newCameraPosition) {
+        float journey = 0f;
+        float duration = 2f;
+        float smoothTime = 0.2F;
+        Vector3 velocity = Vector3.zero;
+        if (cameraIsMoving) {
+            //yield return new WaitForSeconds(2.5f);
+        } 
+        while (journey <= duration) {
+            cameraIsMoving = true;
+            journey = journey + Time.deltaTime;
+
+            mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, newCameraPosition, ref velocity, smoothTime);
+            yield return null;
+
+        }
+        cameraIsMoving = false;
+        
+    }
 
 
 
+
+
+
+    /*
 
     IEnumerator MoveToPosition(Projectile projectile, Vector3 startPosition, Vector3 endPosition) {
         // Short delay added before Projectile is thrown
@@ -185,7 +193,7 @@ public class LevelManager : MonoBehaviour {
         yield return null;
 
     }
-
+    */
 
     /*
         float gravity = 60f;

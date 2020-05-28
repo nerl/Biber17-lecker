@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ZweigSprite : MonoBehaviour {
 
-    bool moveable = false;
+    
     public LevelManager levelManagerListener;
 
     public float speed = 0.5F;

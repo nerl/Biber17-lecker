@@ -13,7 +13,7 @@ using UnityEngine.XR.WSA.Input;
 
 public class Projectile : MonoBehaviour {
 
-    bool moveable = false;
+    //bool moveable = false;
     public LevelManager levelManagerListener;
 
     public float speed = 0.5F;
@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour {
     //[SerializeField]
     Transform control;
     [SerializeField]
-    ProjectileText projectileText;
+    //ProjectileText projectileText;
 
     private int sequencePosition;
     [SerializeField]
@@ -57,6 +57,7 @@ public class Projectile : MonoBehaviour {
     }
 
     private void OnMouseDown() {
+        /*
         if (1 == 2)
             if ((transform.position - target.position).magnitude < (transform.position - start.position).magnitude) {
                 StartCoroutine(MoveOnCurve(target, start));
@@ -65,7 +66,7 @@ public class Projectile : MonoBehaviour {
                 StartCoroutine(MoveOnCurve(start, target));
             }
         levelManagerListener.checkForNotOccupied(gameObject);
-
+        */
 
     }
     // Start is called before the first frame update
@@ -97,7 +98,7 @@ public class Projectile : MonoBehaviour {
 
 
     public void setText(String s) {
-        projectileText.setText(s);
+        //projectileText.setText(s);
     }
 
     void Start() {

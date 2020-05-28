@@ -143,12 +143,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZweigSpriteList: []
   HolzPlaneList: []
-  ProjectilePrefab: {fileID: 3827235308449216629, guid: b8648b36bbe680544bd54b38f9c63dff,
-    type: 3}
   zweigSpritePrefab: {fileID: 4272587270362100391, guid: c3daeff027daf0045ae3fed6f3c688fc,
     type: 3}
   holzPlane: {fileID: 114485930903312532, guid: 0e3d6d89983bafc4b90e7db201ddc4c7,
     type: 3}
+  mainCamera: {fileID: 1017796516}
 --- !u!4 &615388071
 Transform:
   m_ObjectHideFlags: 0
@@ -686,7 +685,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028185158}
-  m_Text: "Dr\xFCck mich"
+  m_Text: "Dr\xFCck mich zum Restart!"
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -745,7 +744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028185158}
   m_LocalRotation: {x: 0, y: -0.16280931, z: 0, w: 0.98665756}
-  m_LocalPosition: {x: -15.19, y: 7.97, z: -16.4}
+  m_LocalPosition: {x: -24.54, y: 7.97, z: -10.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
