@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour {
     Vector3 CameraSceneBeginsPosition = new Vector3(-4.11f, 12f, -184f);
     Vector3 CameraFinalPosition = new Vector3(-4.11f, 18f, -28f);
     bool cameraIsMoving = false;
-
+    bool isSorted = false;
 
 
     /// <summary>
@@ -51,7 +51,23 @@ public class LevelManager : MonoBehaviour {
                 break;
             }
         }
-
+        /*
+        isSorted = true;
+        String s = "";
+        for (int i=0; i<ZweigSpriteList.Count; i++) {
+            s = s + "\n" + i + ":  GetSequencePosition: " + ZweigSpriteList[i].GetSequencePosition() + "  GetValue: " + ZweigSpriteList[i].GetValue();
+            /*
+            if (ZweigSpriteList[i].GetValue()< ZweigSpriteList[i+1].GetValue()) {
+                s = s + "\n" + (i +":  "+ ZweigSpriteList[i].GetValue() + " " + (i+1)+ ": "   +  ZweigSpriteList[i + 1].GetValue());
+                isSorted = false;
+                //break;
+            }
+        }
+        UtilFunctions.Alert(s);
+        if (isSorted) {
+            UtilFunctions.Alert("sortiert!");
+        }
+        */
     }
     /// <summary>
     /// Krass 
@@ -115,6 +131,8 @@ public class LevelManager : MonoBehaviour {
                 zweigSprite.SetSequencePosition(i);
                 zweigSprite.SetLevelManagerListener(this);
                 zweigSprite.name = "Zweig  " + sequence[i - 1];       // wir müssen i dekrementieren, weil wir ja die Zählung ab der ersten Bodenposition haben, welches als Stack verwendet wird
+                zweigSprite.SetValue(sequence[i - 1]);
+
                 zweigSprite.SetSprite(spriteCollection.GetSprite("blaetter_" + (sequence[i - 1])));
                 ZweigSpriteList.Add(zweigSprite);
             }

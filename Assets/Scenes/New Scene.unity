@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 2028185160}
   - component: {fileID: 2028185159}
   m_Layer: 0
-  m_Name: New Text
+  m_Name: BiberMessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
