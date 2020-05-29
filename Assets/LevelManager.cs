@@ -51,6 +51,7 @@ public class LevelManager : MonoBehaviour {
                 break;
             }
         }
+
         /*
         isSorted = true;
         String s = "";
