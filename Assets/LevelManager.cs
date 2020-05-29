@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour {
     public List<ZweigSprite> ZweigSpriteList = new List<ZweigSprite>();
     public List<HolzPlane> HolzPlaneList = new List<HolzPlane>();
     public ZweigSprite zweigSpritePrefab;
+    private int[] ZweigList = new int[6];
     public HolzPlane holzPlane;  // = new HolzPlane().GetComponent<HolzPlane>();
     private SpriteCollection spriteCollection;
     public Camera mainCamera;
@@ -42,7 +43,8 @@ public class LevelManager : MonoBehaviour {
             if (HolzPlaneList[i].getOccupied()) {
                 // Alert(i + " isOccupied " + HolzPlaneList[i].isOccupied);
             }
-            else {
+            else {  // dieser Platz ist frei, wir besetzen ihn, den alten machen wir frei und weisen dem Zweig 
+                    // einen neuen Platz zu
                 tempZweig.Move(HolzPlaneList[i].transform);
                 HolzPlaneList[i].setOccupied(true);
                 HolzPlaneList[tempZweig.GetSequencePosition()].setOccupied(false);
@@ -52,23 +54,34 @@ public class LevelManager : MonoBehaviour {
             }
         }
 
-        /*
+        
         isSorted = true;
         String s = "";
         for (int i=0; i<ZweigSpriteList.Count; i++) {
             s = s + "\n" + i + ":  GetSequencePosition: " + ZweigSpriteList[i].GetSequencePosition() + "  GetValue: " + ZweigSpriteList[i].GetValue();
+            ZweigList[ZweigSpriteList[i].GetSequencePosition()] = -1;
+            ZweigList[ZweigSpriteList[i].GetSequencePosition()] = ZweigSpriteList[i].GetValue();
+            //tempZweig = ZweigSpriteList[i].GetSequencePosition()
             /*
             if (ZweigSpriteList[i].GetValue()< ZweigSpriteList[i+1].GetValue()) {
                 s = s + "\n" + (i +":  "+ ZweigSpriteList[i].GetValue() + " " + (i+1)+ ": "   +  ZweigSpriteList[i + 1].GetValue());
                 isSorted = false;
                 //break;
+            }*/
+        }
+        s = "";
+        isSorted = true;
+        for (int i = 0; i< ZweigSpriteList.Count-1; i++) {
+            //Debug.Log ("ZweigList[i]: " + ZweigList[i] + " ZweigList[i+1]: " + ZweigList[i + 1]);
+            if (ZweigList[i]<ZweigList[i+1]) {
+                isSorted = false;
+                break;
+                
             }
+
+
         }
-        UtilFunctions.Alert(s);
-        if (isSorted) {
-            UtilFunctions.Alert("sortiert!");
-        }
-        */
+        //UtilFunctions.Alert("isSorted: " + isSorted);
     }
     /// <summary>
     /// Krass 
@@ -132,7 +145,7 @@ public class LevelManager : MonoBehaviour {
                 zweigSprite.SetSequencePosition(i);
                 zweigSprite.SetLevelManagerListener(this);
                 zweigSprite.name = "Zweig  " + sequence[i - 1];       // wir müssen i dekrementieren, weil wir ja die Zählung ab der ersten Bodenposition haben, welches als Stack verwendet wird
-                zweigSprite.SetValue(sequence[i - 1]);
+                zweigSprite.SetValue(sequence[i-1]+1);
 
                 zweigSprite.SetSprite(spriteCollection.GetSprite("blaetter_" + (sequence[i - 1])));
                 ZweigSpriteList.Add(zweigSprite);

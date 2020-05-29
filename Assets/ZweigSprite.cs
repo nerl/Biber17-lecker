@@ -43,14 +43,14 @@ public class ZweigSprite : MonoBehaviour {
         return sequencePosition;
     }
     /// <summary>
-    /// 
+    /// wie viele Blätter hat der Zweig
     /// </summary>
     /// <returns></returns>
     public int GetValue() {
         return value;
     }
     /// <summary>
-    /// 
+    /// wie viele Blätter hat der Zweig
     /// </summary>
     /// <param name="i"></param>
     public void SetValue(int i) {
