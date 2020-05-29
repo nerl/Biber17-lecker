@@ -78,6 +78,7 @@ public class LevelManager : MonoBehaviour {
         DestroyPrefab(ZweigSpriteList);
 
 
+
         //for (int i = 0; i < ZweigSpriteList.Count; i++) {
         //    DestroyPrefab(ZweigSpriteList[i].gameObject);
         //}
