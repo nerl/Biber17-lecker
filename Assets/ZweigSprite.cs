@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ZweigSprite : MonoBehaviour {
 
-    bool moveable = false;
+    
     public LevelManager levelManagerListener;
 
     public float speed = 0.5F;
@@ -21,6 +21,7 @@ public class ZweigSprite : MonoBehaviour {
     ProjectileText projectileText;
 
     private int sequencePosition;
+    private int value = 0;
     [SerializeField]
     private ProjectileSprite sprite;
     private Sprite mySprite;
@@ -41,8 +42,20 @@ public class ZweigSprite : MonoBehaviour {
     public int GetSequencePosition() {
         return sequencePosition;
     }
-
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public int GetValue() {
+        return value;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="i"></param>
+    public void SetValue(int i) {
+        value = i;
+    }
     /// <summary>
     /// setzt das aktuelle Sprite Bild 
     /// </summary>
