@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour {
     bool cameraIsMoving = false;
     bool isSorted = false;
     TextMesh biberMessage;
+    AudioSource audioSource;
     
 
 
@@ -89,7 +90,9 @@ public class LevelManager : MonoBehaviour {
         Debug.Log(s);
         if (isSorted) {
             biberMessage.text = "awesome job!";
+            audioSource.Play();
         }
+        
         //UtilFunctions.Alert("isSorted: " + isSorted);
     }
     /// <summary>
@@ -179,6 +182,7 @@ public class LevelManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         biberMessage = GameObject.Find("BiberMessage").GetComponent<TextMesh>();
+        audioSource = GameObject.Find("AudioIsSorted").GetComponent<AudioSource>();
         mainCamera.transform.position = CameraSceneBeginsPosition;
         
         NewGame();

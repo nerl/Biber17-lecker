@@ -8,7 +8,7 @@ public class mainCameraScript : MonoBehaviour
 
     float mouseX, mouseY;
     float cameraRotationX, cameraRotationY;
-    float speed = 1.5f;
+    float speed = 2.5f;
 
     public LevelManager LevelManagerListener;
     // Start is called before the first frame update
