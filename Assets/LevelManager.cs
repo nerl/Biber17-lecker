@@ -19,9 +19,11 @@ public class LevelManager : MonoBehaviour {
     private SpriteCollection spriteCollection;
     public Camera mainCamera;
     Vector3 CameraSceneBeginsPosition = new Vector3(-4.11f, 12f, -184f);
-    Vector3 CameraFinalPosition = new Vector3(-4.11f, 18f, -28f);
+    Vector3 CameraFinalPosition = new Vector3(-4.11f, 20f, -29f);
     bool cameraIsMoving = false;
     bool isSorted = false;
+    TextMesh biberMessage;
+    
 
 
     /// <summary>
@@ -57,10 +59,12 @@ public class LevelManager : MonoBehaviour {
         
         isSorted = true;
         String s = "";
+        ZweigList = new int[6];
         for (int i=0; i<ZweigSpriteList.Count; i++) {
             s = s + "\n" + i + ":  GetSequencePosition: " + ZweigSpriteList[i].GetSequencePosition() + "  GetValue: " + ZweigSpriteList[i].GetValue();
             ZweigList[ZweigSpriteList[i].GetSequencePosition()] = -1;
             ZweigList[ZweigSpriteList[i].GetSequencePosition()] = ZweigSpriteList[i].GetValue();
+            
             //tempZweig = ZweigSpriteList[i].GetSequencePosition()
             /*
             if (ZweigSpriteList[i].GetValue()< ZweigSpriteList[i+1].GetValue()) {
@@ -69,17 +73,22 @@ public class LevelManager : MonoBehaviour {
                 //break;
             }*/
         }
-        s = "";
+        Debug.Log(s);
+        s = "-------------------------------------------\n";
         isSorted = true;
-        for (int i = 0; i< ZweigSpriteList.Count-1; i++) {
-            //Debug.Log ("ZweigList[i]: " + ZweigList[i] + " ZweigList[i+1]: " + ZweigList[i + 1]);
-            if (ZweigList[i]<ZweigList[i+1]) {
+        for (int i = 0; i< ZweigList.Length-1; i++) {
+            s = s + "\n" +  ("ZweigList[i]: " + ZweigList[i]);
+            
+            if ((ZweigList[i]<ZweigList[i+1])  && (ZweigList[i + 1] >0)) {
                 isSorted = false;
                 break;
-                
             }
-
-
+        }
+        
+        //Debug.Log("ZweigList[" + i + "]: " + ZweigList[i]);
+        Debug.Log(s);
+        if (isSorted) {
+            biberMessage.text = "awesome job!";
         }
         //UtilFunctions.Alert("isSorted: " + isSorted);
     }
@@ -104,6 +113,8 @@ public class LevelManager : MonoBehaviour {
     /// zufällig werden die Zweige und Holzplanes ausgerollt
     /// </summary>
     public void NewGame() {
+        biberMessage.text = "Press me to restart.";
+        spriteCollection = new SpriteCollection("blaetter");
         ZoomOut();
         DestroyPrefab(HolzPlaneList);
         DestroyPrefab(ZweigSpriteList);
@@ -132,6 +143,7 @@ public class LevelManager : MonoBehaviour {
         for (int i = 0; i < sequence.Count; i++) {
             s = s + "\n" + sequence[i];
         }
+
         //UtilFunctions.Alert(s);
 
 
@@ -166,8 +178,9 @@ public class LevelManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        biberMessage = GameObject.Find("BiberMessage").GetComponent<TextMesh>();
         mainCamera.transform.position = CameraSceneBeginsPosition;
-        spriteCollection = new SpriteCollection("blaetter");
+        
         NewGame();
     }
 
